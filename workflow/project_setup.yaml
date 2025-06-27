@@ -1,0 +1,19 @@
+steps:
+  - name: Setup Supabase Schema
+    type: database
+    action: create_schema
+    tables: [users, credits, credit_requests, credit_logs, decorations, posts]
+  
+  - name: Configure Admin Dashboard
+    type: interface
+    mode: dual-mode
+    config:
+      basic: [update_credit, ban_user, open_loan]
+      advanced: [analyze_logs, approve_loans, audit_trail]
+  
+  - name: Prepare Dev Agent Mode
+    type: agent
+    rules:
+      - must_check_readme
+      - must_check_system_contract
+      - must log progress to memory/project_logs 

@@ -1,0 +1,4465 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🦈 SHARKSOCIAL - Hacker Social Lending Platform</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        /* Hacker Theme Colors */
+        --primary-green: #00ff00;
+        --secondary-green: #39ff14;
+        --tertiary-green: #00cc00;
+        --dark-green: #008000;
+        --neon-blue: #00ffff;
+        --neon-pink: #ff1493;
+        --neon-orange: #ff6600;
+
+        /* Dark Theme */
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #111111;
+        --bg-card: #1a1a1a;
+        --bg-accent: #222222;
+        --bg-highlight: #2a2a2a;
+
+        /* Text Colors */
+        --text-primary: #ffffff;
+        --text-secondary: #cccccc;
+        --text-muted: #888888;
+        --text-accent: #00ff00;
+
+        /* Border & Effects */
+        --border-color: #333333;
+        --border-accent: #00ff00;
+        --shadow-glow: 0 0 20px rgba(0, 255, 0, 0.3);
+        --shadow-neon: 0 0 30px rgba(0, 255, 255, 0.5);
+        --shadow-dark: 0 4px 15px rgba(0, 0, 0, 0.8);
+
+        /* Credit System Colors */
+        --credit-color: #ffd700;
+        --loan-color: #ff4444;
+        --profit-color: #00ff88;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg-primary) 0%,
+          var(--bg-secondary) 100%
+        );
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Animated Background Matrix Effect */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          radial-gradient(
+            circle at 20% 20%,
+            rgba(0, 255, 0, 0.05) 0%,
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(0, 255, 255, 0.05) 0%,
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 40% 60%,
+            rgba(255, 20, 147, 0.05) 0%,
+            transparent 30%
+          );
+        z-index: -1;
+        animation: matrixFloat 20s ease-in-out infinite;
+      }
+
+      @keyframes matrixFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .app-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+
+      /* Header with Hacker Aesthetic */
+      .hacker-header {
+        background: linear-gradient(
+          90deg,
+          var(--bg-card) 0%,
+          var(--bg-accent) 50%,
+          var(--bg-card) 100%
+        );
+        border-bottom: 2px solid var(--border-accent);
+        padding: 1rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: var(--shadow-glow);
+        backdrop-filter: blur(10px);
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .shark-logo {
+        font-size: 2rem;
+        animation: sharkGlow 2s ease-in-out infinite alternate;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-green);
+        text-shadow: 0 0 10px var(--primary-green);
+        font-family: "JetBrains Mono", monospace;
+        letter-spacing: 2px;
+      }
+
+      @keyframes sharkGlow {
+        from {
+          text-shadow: 0 0 5px var(--neon-blue);
+        }
+        to {
+          text-shadow:
+            0 0 20px var(--neon-blue),
+            0 0 30px var(--neon-blue);
+        }
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .credit-display {
+        background: linear-gradient(
+          45deg,
+          var(--bg-accent),
+          var(--bg-highlight)
+        );
+        border: 1px solid var(--credit-color);
+        border-radius: 25px;
+        padding: 0.5rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      }
+
+      .credit-amount {
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 600;
+        color: var(--credit-color);
+        text-shadow: 0 0 5px var(--credit-color);
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--neon-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--bg-primary);
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .user-avatar:hover {
+        transform: scale(1.1);
+        border-color: var(--primary-green);
+        box-shadow: var(--shadow-glow);
+      }
+
+      /* Floating Widget */
+      .floating-widget {
+        position: fixed;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        background: var(--bg-card);
+        border: 1px solid var(--border-accent);
+        border-radius: 15px;
+        padding: 1rem;
+        z-index: 999;
+        box-shadow: var(--shadow-glow);
+        backdrop-filter: blur(10px);
+        cursor: move;
+        min-width: 220px;
+      }
+
+      /* Widget Header */
+      .widget-header {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 0.5rem;
+      }
+
+      .widget-controls {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .widget-control-btn {
+        width: 32px;
+        height: 32px;
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .widget-control-btn:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        transform: scale(1.1);
+        box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+      }
+
+      .widget-control-btn span {
+        font-size: 0.6rem;
+        font-weight: bold;
+        position: absolute;
+        bottom: -2px;
+        right: -2px;
+        background: var(--primary-green);
+        color: var(--bg-primary);
+        border-radius: 4px;
+        padding: 1px 3px;
+        line-height: 1;
+      }
+
+      /* Settings Panel */
+      .widget-settings {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: -250px;
+        width: 240px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-accent);
+        border-radius: 15px;
+        padding: 1rem;
+        box-shadow: var(--shadow-glow);
+        backdrop-filter: blur(10px);
+      }
+
+      .widget-settings.show {
+        display: block;
+      }
+
+      .settings-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .settings-header h4 {
+        margin: 0;
+        color: var(--text-primary);
+        font-size: 1rem;
+      }
+
+      .close-settings {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .close-settings:hover {
+        color: var(--primary-green);
+      }
+
+      .setting-item {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .setting-item label {
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .setting-item select,
+      .setting-item input[type="checkbox"] {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        color: var(--text-primary);
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      .setting-item select:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+      }
+
+      .widget-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--neon-blue)
+        );
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--bg-primary);
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .widget-icon:hover {
+        transform: scale(1.1) rotate(10deg);
+        box-shadow: var(--shadow-neon);
+      }
+
+      .widget-links {
+        display: none;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .widget-links.show {
+        display: flex;
+      }
+
+      .widget-link {
+        padding: 0.5rem;
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text-primary);
+        text-align: center;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .widget-link:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+
+      /* Main Layout */
+      .main-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr 320px;
+        gap: 2rem;
+        padding: 2rem;
+        flex: 1;
+      }
+
+      /* Sidebar */
+      .hacker-sidebar {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        height: fit-content;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .sidebar-section {
+        margin-bottom: 2rem;
+      }
+
+      .section-title {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--primary-green);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.5rem;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-bottom: 0.25rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      .nav-item:hover {
+        background: var(--bg-accent);
+        color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+        transform: translateX(5px);
+      }
+
+      .nav-item.active {
+        background: linear-gradient(
+          90deg,
+          var(--bg-accent),
+          rgba(0, 255, 0, 0.1)
+        );
+        color: var(--primary-green);
+        border-left: 3px solid var(--primary-green);
+      }
+
+      .nav-item i {
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Feed Area */
+      .feed-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .create-post-panel {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .post-input-area {
+        width: 100%;
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        color: var(--text-primary);
+        font-family: inherit;
+        resize: none;
+        min-height: 120px;
+        transition: all 0.3s ease;
+      }
+
+      .post-input-area:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+      }
+
+      .post-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+      }
+
+      .post-type-selector {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .post-type-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        background: var(--bg-accent);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .post-type-btn.active {
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        border-color: var(--primary-green);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+      }
+
+      .post-type-btn.loan {
+        border-color: var(--loan-color);
+      }
+
+      .post-type-btn.loan.active {
+        background: linear-gradient(45deg, var(--loan-color), #ff6666);
+      }
+
+      .hacker-btn {
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .hacker-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+      }
+
+      /* Posts */
+      .post-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .post-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-green);
+        box-shadow: var(--shadow-glow);
+      }
+
+      .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+      }
+
+      .post-user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .post-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--bg-primary);
+        font-weight: 700;
+      }
+
+      .user-details h4 {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .user-meta {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .post-type-badge {
+        padding: 0.25rem 1rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .badge-lend {
+        background: rgba(0, 255, 0, 0.2);
+        color: var(--primary-green);
+        border: 1px solid var(--primary-green);
+      }
+
+      .badge-borrow {
+        background: rgba(0, 255, 255, 0.2);
+        color: var(--neon-blue);
+        border: 1px solid var(--neon-blue);
+      }
+
+      .badge-credit {
+        background: rgba(255, 215, 0, 0.2);
+        color: var(--credit-color);
+        border: 1px solid var(--credit-color);
+      }
+
+      .post-content h3 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .post-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      /* Loan/Credit Details Grid */
+      .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+        padding: 1rem;
+        background: var(--bg-accent);
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+      }
+
+      .detail-stat {
+        text-align: center;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .stat-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-green);
+        margin-top: 0.25rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .credit-value {
+        color: var(--credit-color);
+      }
+
+      .interest-value {
+        color: var(--loan-color);
+      }
+
+      /* Post Actions */
+      .post-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .action-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        background: var(--bg-accent);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .action-btn:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+
+      .action-btn.primary {
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        border-color: var(--primary-green);
+      }
+
+      .action-btn.danger {
+        background: linear-gradient(45deg, var(--loan-color), #ff6666);
+        color: var(--bg-primary);
+        border-color: var(--loan-color);
+      }
+
+      .post-stats {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Right Sidebar */
+      .info-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .info-widget {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .widget-title {
+        font-family: "JetBrains Mono", monospace;
+        font-weight: 600;
+        color: var(--primary-green);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .trending-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .trending-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        background: var(--bg-accent);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .trending-item:hover {
+        background: var(--bg-highlight);
+        transform: translateX(5px);
+      }
+
+      .trending-tag {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .trending-count {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Stats Grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .stat-card {
+        background: var(--bg-accent);
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        border-color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+      }
+
+      .stat-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-green);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .stat-desc {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 0.25rem;
+      }
+
+      /* Page Content Routing */
+      .page-content {
+        display: none;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      .page-content.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Bio Page Styles */
+      .bio-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .profile-header {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .profile-cover {
+        height: 200px;
+        background: linear-gradient(
+          135deg,
+          var(--bg-primary) 0%,
+          var(--bg-accent) 50%,
+          var(--bg-primary) 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+
+      .matrix-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          var(--primary-green) 2px,
+          var(--primary-green) 3px
+        );
+        opacity: 0.1;
+        animation: matrixScroll 10s linear infinite;
+      }
+
+      @keyframes matrixScroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(20px);
+        }
+      }
+
+      .profile-info {
+        padding: 2rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 2rem;
+        position: relative;
+        margin-top: -50px;
+      }
+
+      .profile-avatar-large {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--neon-blue)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--bg-primary);
+        font-size: 2.5rem;
+        font-weight: 700;
+        border: 4px solid var(--bg-card);
+        box-shadow: var(--shadow-glow);
+      }
+
+      .profile-details {
+        flex: 1;
+      }
+
+      .profile-name {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .profile-title {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .profile-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 1rem;
+        background: var(--bg-accent);
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+      }
+
+      .stat-number {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-green);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .stat-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 0.25rem;
+      }
+
+      .edit-profile-btn {
+        align-self: flex-start;
+      }
+
+      .bio-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .bio-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .bio-card {
+        background: var(--bg-accent);
+        border-radius: 10px;
+        padding: 1.5rem;
+      }
+
+      .bio-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .tag {
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .portfolio-card {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .portfolio-card:hover {
+        border-color: var(--primary-green);
+        transform: translateY(-5px);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+      }
+
+      .portfolio-card h4 {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .portfolio-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-green);
+        font-family: "JetBrains Mono", monospace;
+        margin-bottom: 0.5rem;
+      }
+
+      .portfolio-change {
+        font-size: 0.8rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .portfolio-change.positive {
+        color: var(--profit-color);
+      }
+
+      .portfolio-change.neutral {
+        color: var(--text-muted);
+      }
+
+      .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .achievement-card {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .achievement-card:hover {
+        border-color: var(--credit-color);
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+      }
+
+      .achievement-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .achievement-card h4 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .timeline-item {
+        display: flex;
+        gap: 1rem;
+        position: relative;
+      }
+
+      .timeline-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--primary-green);
+        margin-top: 0.5rem;
+        position: relative;
+        flex-shrink: 0;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      }
+
+      .timeline-item:not(:last-child) .timeline-dot::after {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 40px;
+        background: var(--border-color);
+      }
+
+      .timeline-content {
+        flex: 1;
+        background: var(--bg-accent);
+        border-radius: 10px;
+        padding: 1rem;
+      }
+
+      .timeline-content h4 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-time {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Marketplace Styles */
+      .marketplace-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .marketplace-header {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-green);
+        margin-bottom: 0.5rem;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .page-subtitle {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+
+      .marketplace-filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .filter-tabs {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .filter-btn {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 25px;
+        background: var(--bg-accent);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .filter-btn.active,
+      .filter-btn:hover {
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        border-color: var(--primary-green);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+      }
+
+      .search-bar {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .marketplace-search {
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 25px;
+        background: var(--bg-accent);
+        color: var(--text-primary);
+        width: 300px;
+        font-family: inherit;
+      }
+
+      .marketplace-search:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+
+      .search-btn {
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--primary-green);
+        border-radius: 25px;
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .search-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+      }
+
+      .featured-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .featured-carousel {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .featured-item {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .featured-item:hover {
+        border-color: var(--primary-green);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-glow);
+      }
+
+      .featured-image {
+        margin-bottom: 1rem;
+      }
+
+      .product-preview {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 auto;
+        color: var(--bg-primary);
+      }
+
+      .matrix-theme {
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--dark-green)
+        );
+      }
+
+      .neon-theme {
+        background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+      }
+
+      .hacker-theme {
+        background: linear-gradient(
+          45deg,
+          var(--bg-primary),
+          var(--primary-green)
+        );
+      }
+
+      .quantum-theme {
+        background: linear-gradient(
+          45deg,
+          var(--neon-pink),
+          var(--neon-orange)
+        );
+      }
+
+      .terminal-theme {
+        background: linear-gradient(
+          45deg,
+          var(--bg-primary),
+          var(--text-primary)
+        );
+      }
+
+      .hologram-theme {
+        background: linear-gradient(
+          45deg,
+          var(--neon-blue),
+          var(--primary-green)
+        );
+      }
+
+      .crypto-theme {
+        background: linear-gradient(
+          45deg,
+          var(--credit-color),
+          var(--neon-orange)
+        );
+      }
+
+      .ai-theme {
+        background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue));
+      }
+
+      .sound-theme {
+        background: linear-gradient(
+          45deg,
+          var(--neon-orange),
+          var(--credit-color)
+        );
+      }
+
+      .featured-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--credit-color);
+        font-family: "JetBrains Mono", monospace;
+        margin-top: 1rem;
+      }
+
+      .products-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .product-card {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover {
+        border-color: var(--primary-green);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-glow);
+      }
+
+      .product-image {
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
+      }
+
+      .product-badges {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .badge-hot {
+        background: var(--loan-color);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .badge-new {
+        background: var(--neon-blue);
+        color: var(--bg-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .badge-limited {
+        background: var(--credit-color);
+        color: var(--bg-primary);
+        padding: 0.25rem 0.5rem;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .product-info {
+        padding: 0 1.5rem 1rem;
+      }
+
+      .product-info h3 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .product-info p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .product-stats {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+
+      .product-price {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--credit-color);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .product-btn {
+        width: 100%;
+        padding: 0.75rem;
+        border: none;
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .product-btn:hover {
+        background: linear-gradient(
+          45deg,
+          var(--secondary-green),
+          var(--primary-green)
+        );
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+      }
+
+      /* Chat Styles */
+      .chat-container {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        height: 600px;
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        overflow: hidden;
+        background: var(--bg-card);
+        box-shadow: var(--shadow-dark);
+      }
+
+      .chat-sidebar {
+        background: var(--bg-accent);
+        border-right: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chat-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .chat-header h3 {
+        color: var(--primary-green);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .new-chat-btn {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 1px solid var(--primary-green);
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .new-chat-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      }
+
+      .chat-search {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .chat-search-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        background: var(--bg-card);
+        color: var(--text-primary);
+        font-family: inherit;
+      }
+
+      .chat-search-input:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+
+      .chat-list {
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .chat-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .chat-item:hover {
+        background: var(--bg-highlight);
+      }
+
+      .chat-item.active {
+        background: linear-gradient(
+          90deg,
+          var(--bg-highlight),
+          rgba(0, 255, 0, 0.05)
+        );
+        border-right: 3px solid var(--primary-green);
+      }
+
+      .chat-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--bg-primary);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .chat-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .chat-info h4 {
+        color: var(--text-primary);
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .chat-info p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .chat-time {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+
+      .chat-unread {
+        background: var(--primary-green);
+        color: var(--bg-primary);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .chat-main {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chat-main-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .chat-contact {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .chat-contact-info h3 {
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+      }
+
+      .online-status {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .chat-actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .chat-action-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid var(--border-color);
+        background: var(--bg-accent);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .chat-action-btn:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+
+      .chat-messages {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .message {
+        display: flex;
+        gap: 0.75rem;
+        max-width: 70%;
+      }
+
+      .message.sent {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .message-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--bg-primary);
+        font-weight: 700;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+
+      .message-content {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1rem;
+        position: relative;
+      }
+
+      .message.sent .message-content {
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+      }
+
+      .message-content p {
+        margin-bottom: 0.5rem;
+      }
+
+      .message-time {
+        font-size: 0.75rem;
+        opacity: 0.7;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .contract-share {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .contract-icon {
+        font-size: 1.5rem;
+      }
+
+      .contract-info h4 {
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .contract-info p {
+        font-size: 0.8rem;
+        opacity: 0.8;
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .contract-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        color: inherit;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .contract-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .chat-input-area {
+        padding: 1rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .chat-attachment-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid var(--border-color);
+        background: var(--bg-accent);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .chat-attachment-btn:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+      }
+
+      .chat-input {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 25px;
+        background: var(--bg-accent);
+        color: var(--text-primary);
+        font-family: inherit;
+      }
+
+      .chat-input:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+
+      .chat-send-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid var(--primary-green);
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .chat-send-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+      }
+
+      /* Explore Page Styles */
+      .explore-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .explore-header {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .explore-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .explore-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .hacker-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .hacker-card {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .hacker-card:hover {
+        border-color: var(--primary-green);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-glow);
+      }
+
+      .hacker-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--bg-primary);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 auto 1rem;
+      }
+
+      .hacker-card h3 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .hacker-card p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .hacker-stats {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 1rem;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .follow-btn {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--primary-green);
+        border-radius: 25px;
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .follow-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+      }
+
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .project-card {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .project-card:hover {
+        border-color: var(--primary-green);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-glow);
+      }
+
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .project-header h3 {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .project-status.hot {
+        background: var(--loan-color);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .project-status.new {
+        background: var(--neon-blue);
+        color: var(--bg-primary);
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .project-card p {
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .project-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .stat {
+        text-align: center;
+        padding: 0.75rem;
+        background: var(--bg-highlight);
+        border-radius: 8px;
+      }
+
+      .stat-label {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-bottom: 0.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .stat-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-green);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .invest-btn {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--neon-orange);
+        border-radius: 25px;
+        background: linear-gradient(
+          45deg,
+          var(--neon-orange),
+          var(--credit-color)
+        );
+        color: var(--bg-primary);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .invest-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+      }
+
+      .opportunities-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .opportunity-card {
+        background: var(--bg-accent);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .opportunity-card:hover {
+        border-color: var(--primary-green);
+        transform: translateX(5px);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+      }
+
+      .opportunity-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .opportunity-content {
+        flex: 1;
+      }
+
+      .opportunity-content h3 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .opportunity-content p {
+        color: var(--text-secondary);
+        margin-bottom: 0.75rem;
+        line-height: 1.6;
+      }
+
+      .opportunity-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .opportunity-btn {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid var(--primary-green);
+        border-radius: 25px;
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+        color: var(--bg-primary);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .opportunity-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+      }
+
+      /* Notifications Page Styles */
+      .notifications-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .notifications-header {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .notification-controls {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .mark-all-read {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 25px;
+        background: var(--bg-accent);
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .mark-all-read:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+
+      .notification-settings {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: 1px solid var(--border-color);
+        background: var(--bg-accent);
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .notification-settings:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        transform: rotate(90deg);
+      }
+
+      .notification-filters {
+        display: flex;
+        gap: 0.5rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1rem;
+        box-shadow: var(--shadow-dark);
+      }
+
+      .notifications-list {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        box-shadow: var(--shadow-dark);
+        overflow: hidden;
+      }
+
+      .notification-item {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      .notification-item:last-child {
+        border-bottom: none;
+      }
+
+      .notification-item:hover {
+        background: var(--bg-accent);
+      }
+
+      .notification-item.unread {
+        background: rgba(0, 255, 0, 0.05);
+        border-left: 4px solid var(--primary-green);
+      }
+
+      .notification-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+      }
+
+      .notification-icon.loan {
+        background: linear-gradient(
+          45deg,
+          var(--credit-color),
+          var(--neon-orange)
+        );
+      }
+
+      .notification-icon.trade {
+        background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+      }
+
+      .notification-icon.social {
+        background: linear-gradient(
+          45deg,
+          var(--primary-green),
+          var(--secondary-green)
+        );
+      }
+
+      .notification-icon.system {
+        background: linear-gradient(
+          45deg,
+          var(--text-muted),
+          var(--border-color)
+        );
+      }
+
+      .notification-content {
+        flex: 1;
+      }
+
+      .notification-content h3 {
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .notification-content p {
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+        line-height: 1.6;
+      }
+
+      .notification-time {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .notification-action {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        background: var(--bg-accent);
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        font-size: 0.9rem;
+      }
+
+      .notification-action:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .main-layout {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .hacker-sidebar,
+        .info-sidebar {
+          display: none;
+        }
+
+        .chat-container {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+
+        .chat-sidebar {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header-content {
+          padding: 0.5rem;
+        }
+
+        .main-layout {
+          padding: 1rem;
+        }
+
+        .credit-display {
+          display: none;
+        }
+
+        .floating-widget {
+          right: 10px;
+          min-width: 180px;
+          padding: 0.75rem;
+        }
+
+        .widget-control-btn {
+          width: 28px;
+          height: 28px;
+          font-size: 0.7rem;
+        }
+
+        .widget-control-btn span {
+          font-size: 0.5rem;
+          padding: 0px 2px;
+        }
+
+        .widget-settings {
+          left: -200px;
+          width: 190px;
+          font-size: 0.85rem;
+        }
+
+        .setting-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.25rem;
+        }
+
+        .setting-item select {
+          width: 100%;
+          padding: 0.3rem;
+          transform: translateY(-50%) scale(0.9);
+        }
+
+        .marketplace-filters {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .filter-tabs {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .marketplace-search {
+          width: 100%;
+        }
+
+        .featured-carousel {
+          grid-template-columns: 1fr;
+        }
+
+        .products-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .profile-info {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .profile-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .portfolio-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .achievements-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Animation Effects */
+      @keyframes glitch {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-2px);
+        }
+        40% {
+          transform: translateX(2px);
+        }
+        60% {
+          transform: translateX(-1px);
+        }
+        80% {
+          transform: translateX(1px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      .glitch-effect {
+        animation: glitch 0.3s ease-in-out;
+      }
+
+      .pulse-effect {
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      /* Terminal-like effect for some elements */
+      .terminal-text {
+        font-family: "JetBrains Mono", monospace;
+        color: var(--primary-green);
+        text-shadow: 0 0 5px var(--primary-green);
+      }
+
+      .scan-line {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scan-line::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--primary-green),
+          transparent
+        );
+        animation: scan 3s linear infinite;
+      }
+
+      @keyframes scan {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating Widget -->
+    <div class="floating-widget" id="floatingWidget">
+      <!-- Widget Header with Settings and Language -->
+      <div class="widget-header">
+        <div class="widget-controls">
+          <button
+            class="widget-control-btn"
+            onclick="toggleLanguage()"
+            title="Toggle Language / สลับภาษา"
+          >
+            <i class="fas fa-globe"></i>
+            <span id="currentLang">EN</span>
+          </button>
+          <button
+            class="widget-control-btn"
+            onclick="toggleSettings()"
+            title="Settings / ตั้งค่า"
+          >
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Widget Icon -->
+      <div class="widget-icon" onclick="toggleWidget()">
+        <i class="fas fa-rocket"></i>
+      </div>
+
+      <!-- Settings Panel -->
+      <div class="widget-settings" id="widgetSettings">
+        <div class="settings-header">
+          <h4 id="settingsTitle">Widget Settings</h4>
+          <button class="close-settings" onclick="toggleSettings()">×</button>
+        </div>
+        <div class="settings-content">
+          <div class="setting-item">
+            <label id="themeLabel">Theme:</label>
+            <select id="themeSelect" onchange="changeTheme()">
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+              <option value="auto">Auto</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <label id="positionLabel">Position:</label>
+            <select id="positionSelect" onchange="changePosition()">
+              <option value="right">Right</option>
+              <option value="left">Left</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <label id="notificationsLabel">Notifications:</label>
+            <input type="checkbox" id="notificationsToggle" checked />
+          </div>
+        </div>
+      </div>
+
+      <!-- Widget Navigation Links -->
+      <div class="widget-links" id="widgetLinks">
+        <a href="#bio" class="widget-link">
+          <i class="fas fa-user"></i>
+          <span class="link-text" data-en="Bio" data-th="ประวัติ">Bio</span>
+        </a>
+        <a href="#feed" class="widget-link">
+          <i class="fas fa-home"></i>
+          <span class="link-text" data-en="Feed" data-th="ฟีด">Feed</span>
+        </a>
+        <a href="#marketplace" class="widget-link">
+          <i class="fas fa-store"></i>
+          <span class="link-text" data-en="Market" data-th="ตลาด">Market</span>
+        </a>
+        <a href="#chat" class="widget-link">
+          <i class="fas fa-comments"></i>
+          <span class="link-text" data-en="Chat" data-th="แชท">Chat</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="app-container">
+      <!-- Header -->
+      <header class="hacker-header">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="shark-logo">🦈</div>
+            <div class="logo-text">SHARKSOCIAL</div>
+          </div>
+
+          <div class="header-right">
+            <div class="credit-display">
+              <i class="fas fa-coins"></i>
+              <span class="credit-amount">15,750 CR</span>
+            </div>
+            <div class="user-avatar">H4</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Layout -->
+      <main class="main-layout">
+        <!-- Left Sidebar -->
+        <aside class="hacker-sidebar">
+          <div class="sidebar-section">
+            <h3 class="section-title">🏠 NAVIGATION</h3>
+            <div class="nav-item active">
+              <i class="fas fa-home"></i>
+              <span>Home Feed</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-search"></i>
+              <span>Explore</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-bell"></i>
+              <span>Notifications</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-comments"></i>
+              <span>Messages</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="section-title">💰 SHARKWALLET</h3>
+            <div class="nav-item">
+              <i class="fas fa-wallet"></i>
+              <span>My Wallet</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-exchange-alt"></i>
+              <span>Transfer CR</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-history"></i>
+              <span>Transaction Log</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="section-title">🦈 SHARKLOAN</h3>
+            <div class="nav-item">
+              <i class="fas fa-hand-holding-usd"></i>
+              <span>Lend Credits</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-handshake"></i>
+              <span>Borrow Credits</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-chart-line"></i>
+              <span>Loan Analytics</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="section-title">🛍️ MARKETPLACE</h3>
+            <div class="nav-item">
+              <i class="fas fa-palette"></i>
+              <span>SharkThemes</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-magic"></i>
+              <span>Profile Mods</span>
+            </div>
+            <div class="nav-item">
+              <i class="fas fa-store"></i>
+              <span>Marketplace</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Content Container -->
+        <div id="main-content" class="main-content">
+          <!-- HOME/FEED PAGE -->
+          <div id="feed-page" class="page-content active">
+            <div class="feed-container">
+              <!-- Create Post Panel -->
+              <div class="create-post-panel scan-line">
+                <textarea
+                  class="post-input-area"
+                  placeholder="Share your hacker thoughts... What are you coding today? 🦈💻"
+                ></textarea>
+                <div class="post-controls">
+                  <div class="post-type-selector">
+                    <div class="post-type-btn active">
+                      <i class="fas fa-code"></i>
+                      Post
+                    </div>
+                    <div class="post-type-btn">
+                      <i class="fas fa-hand-holding-usd"></i>
+                      Lend CR
+                    </div>
+                    <div class="post-type-btn loan">
+                      <i class="fas fa-handshake"></i>
+                      Borrow CR
+                    </div>
+                  </div>
+                  <button class="hacker-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Deploy
+                  </button>
+                </div>
+              </div>
+
+              <!-- Posts -->
+              <article class="post-card">
+                <div class="post-header">
+                  <div class="post-user-info">
+                    <div class="post-avatar">CX</div>
+                    <div class="user-details">
+                      <h4>CyberX_404</h4>
+                      <div class="user-meta">
+                        2h ago • Rating: ⚡4.9/5 • Trust: 98%
+                      </div>
+                    </div>
+                  </div>
+                  <span class="post-type-badge badge-lend">LEND</span>
+                </div>
+
+                <div class="post-content">
+                  <h3>🚀 High-Speed Credit Lending Pool</h3>
+                  <p class="post-description">
+                    Offering premium credit lending with custom smart contracts.
+                    Auto-calculated interest rates based on market volatility.
+                    Perfect for short-term liquidity needs. Secured by
+                    blockchain verification.
+                  </p>
+                </div>
+
+                <div class="details-grid">
+                  <div class="detail-stat">
+                    <div class="stat-label">Pool Size</div>
+                    <div class="stat-value credit-value">50,000 CR</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">Interest/Hour</div>
+                    <div class="stat-value interest-value">7.5%</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">Min Amount</div>
+                    <div class="stat-value">500 CR</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">Max Duration</div>
+                    <div class="stat-value">72h</div>
+                  </div>
+                </div>
+
+                <div class="post-actions">
+                  <div class="action-buttons">
+                    <button class="action-btn primary">
+                      <i class="fas fa-rocket"></i>
+                      Quick Borrow
+                    </button>
+                    <button class="action-btn">
+                      <i class="fas fa-calculator"></i>
+                      Calculate
+                    </button>
+                    <button class="action-btn">
+                      <i class="fas fa-comment-dots"></i>
+                      Message
+                    </button>
+                  </div>
+                  <div class="post-stats">
+                    <i class="fas fa-eye"></i> 127 views •
+                    <i class="fas fa-fire"></i> 23 active
+                  </div>
+                </div>
+              </article>
+
+              <article class="post-card">
+                <div class="post-header">
+                  <div class="post-user-info">
+                    <div class="post-avatar">BZ</div>
+                    <div class="user-details">
+                      <h4>ByteZombie</h4>
+                      <div class="user-meta">
+                        4h ago • Rating: ⚡4.7/5 • Trust: 92%
+                      </div>
+                    </div>
+                  </div>
+                  <span class="post-type-badge badge-borrow">BORROW</span>
+                </div>
+
+                <div class="post-content">
+                  <h3>🎯 Emergency Credit Request - DeFi Project</h3>
+                  <p class="post-description">
+                    Need quick credits for gas fees to deploy my new DeFi
+                    protocol. ROI expected 300% within 48h. Willing to pay
+                    premium interest for fast execution. Smart contract already
+                    audited.
+                  </p>
+                </div>
+
+                <div class="details-grid">
+                  <div class="detail-stat">
+                    <div class="stat-label">Amount Needed</div>
+                    <div class="stat-value credit-value">8,500 CR</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">Max Interest</div>
+                    <div class="stat-value interest-value">12%/hr</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">Duration</div>
+                    <div class="stat-value">24-48h</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">Collateral</div>
+                    <div class="stat-value">NFT + Rep</div>
+                  </div>
+                </div>
+
+                <div class="post-actions">
+                  <div class="action-buttons">
+                    <button class="action-btn danger">
+                      <i class="fas fa-handshake"></i>
+                      Lend Now
+                    </button>
+                    <button class="action-btn">
+                      <i class="fas fa-shield-alt"></i>
+                      View Audit
+                    </button>
+                    <button class="action-btn">
+                      <i class="fas fa-chart-line"></i>
+                      Analytics
+                    </button>
+                  </div>
+                  <div class="post-stats">
+                    <i class="fas fa-eye"></i> 89 views •
+                    <i class="fas fa-hand-holding-usd"></i> 7 offers
+                  </div>
+                </div>
+              </article>
+
+              <article class="post-card">
+                <div class="post-header">
+                  <div class="post-user-info">
+                    <div class="post-avatar">QH</div>
+                    <div class="user-details">
+                      <h4>QuantumHacker</h4>
+                      <div class="user-meta">
+                        6h ago • Rating: ⚡5.0/5 • Trust: 100%
+                      </div>
+                    </div>
+                  </div>
+                  <span class="post-type-badge badge-credit">TRADE</span>
+                </div>
+
+                <div class="post-content">
+                  <h3>🎨 Selling Rare Hacker Profile Themes</h3>
+                  <p class="post-description">
+                    Custom-coded profile themes with matrix animations, glitch
+                    effects, and neon aesthetics. Each theme includes: animated
+                    backgrounds, custom fonts, particle effects, and sound
+                    packs. Limited edition - only 10 copies available.
+                  </p>
+                </div>
+
+                <div class="details-grid">
+                  <div class="detail-stat">
+                    <div class="stat-label">Price Each</div>
+                    <div class="stat-value credit-value">2,500 CR</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">Available</div>
+                    <div class="stat-value">7/10</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">Features</div>
+                    <div class="stat-value">15+</div>
+                  </div>
+                  <div class="detail-stat">
+                    <div class="stat-label">License</div>
+                    <div class="stat-value">Lifetime</div>
+                  </div>
+                </div>
+
+                <div class="post-actions">
+                  <div class="action-buttons">
+                    <button class="action-btn primary">
+                      <i class="fas fa-shopping-cart"></i>
+                      Buy Theme
+                    </button>
+                    <button class="action-btn">
+                      <i class="fas fa-eye"></i>
+                      Preview
+                    </button>
+                    <button class="action-btn">
+                      <i class="fas fa-heart"></i>
+                      Wishlist
+                    </button>
+                  </div>
+                  <div class="post-stats">
+                    <i class="fas fa-eye"></i> 234 views •
+                    <i class="fas fa-star"></i> 45 likes
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- BIO PAGE -->
+          <div id="bio-page" class="page-content">
+            <div class="bio-container">
+              <!-- Profile Header -->
+              <div class="profile-header">
+                <div class="profile-cover">
+                  <div class="matrix-bg"></div>
+                </div>
+                <div class="profile-info">
+                  <div class="profile-avatar-large">H4</div>
+                  <div class="profile-details">
+                    <h1 class="profile-name">HackerShark_404</h1>
+                    <p class="profile-title">
+                      🦈 Elite DeFi Developer & Credit Lender
+                    </p>
+                    <div class="profile-stats">
+                      <div class="stat-item">
+                        <span class="stat-number">15.7K</span>
+                        <span class="stat-label">CR Earned</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-number">⚡4.9</span>
+                        <span class="stat-label">Rating</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Trust Score</span>
+                      </div>
+                      <div class="stat-item">
+                        <span class="stat-number">142</span>
+                        <span class="stat-label">Loans Made</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="hacker-btn edit-profile-btn">
+                    <i class="fas fa-cog"></i>
+                    Edit Profile
+                  </button>
+                </div>
+              </div>
+
+              <!-- Bio Sections -->
+              <div class="bio-sections">
+                <div class="bio-section">
+                  <h3 class="section-title">🎯 About Me</h3>
+                  <div class="bio-card">
+                    <p>
+                      Elite blockchain developer specialized in DeFi protocols
+                      and smart contract security. 5+ years experience in crypto
+                      lending platforms. Known for lightning-fast loan
+                      processing and zero defaults.
+                    </p>
+                    <div class="bio-tags">
+                      <span class="tag">#DeFi</span>
+                      <span class="tag">#SmartContracts</span>
+                      <span class="tag">#CreditLending</span>
+                      <span class="tag">#Blockchain</span>
+                      <span class="tag">#Security</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bio-section">
+                  <h3 class="section-title">💼 Lending Portfolio</h3>
+                  <div class="portfolio-grid">
+                    <div class="portfolio-card">
+                      <h4>Total Loans</h4>
+                      <div class="portfolio-value">142</div>
+                      <div class="portfolio-change positive">
+                        +23 this month
+                      </div>
+                    </div>
+                    <div class="portfolio-card">
+                      <h4>Credits Lent</h4>
+                      <div class="portfolio-value">2.3M CR</div>
+                      <div class="portfolio-change positive">+15.7% ROI</div>
+                    </div>
+                    <div class="portfolio-card">
+                      <h4>Success Rate</h4>
+                      <div class="portfolio-value">100%</div>
+                      <div class="portfolio-change neutral">0 defaults</div>
+                    </div>
+                    <div class="portfolio-card">
+                      <h4>Avg Interest</h4>
+                      <div class="portfolio-value">8.5%</div>
+                      <div class="portfolio-change positive">Above market</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bio-section">
+                  <h3 class="section-title">�� Achievements</h3>
+                  <div class="achievements-grid">
+                    <div class="achievement-card">
+                      <div class="achievement-icon">🥇</div>
+                      <h4>Elite Lender</h4>
+                      <p>100+ successful loans</p>
+                    </div>
+                    <div class="achievement-card">
+                      <div class="achievement-icon">🛡️</div>
+                      <h4>Zero Default</h4>
+                      <p>Perfect track record</p>
+                    </div>
+                    <div class="achievement-card">
+                      <div class="achievement-icon">⚡</div>
+                      <h4>Speed Lender</h4>
+                      <p>Sub-minute processing</p>
+                    </div>
+                    <div class="achievement-card">
+                      <div class="achievement-icon">🎯</div>
+                      <h4>High Profit</h4>
+                      <p>Top 1% ROI rate</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bio-section">
+                  <h3 class="section-title">📊 Activity Timeline</h3>
+                  <div class="timeline">
+                    <div class="timeline-item">
+                      <div class="timeline-dot"></div>
+                      <div class="timeline-content">
+                        <h4>Lent 50,000 CR to DeFi Protocol</h4>
+                        <p>High-yield lending for liquidity pool expansion</p>
+                        <span class="timeline-time">2 hours ago</span>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-dot"></div>
+                      <div class="timeline-content">
+                        <h4>Created Smart Lending Contract</h4>
+                        <p>
+                          Automated loan processing with dynamic interest rates
+                        </p>
+                        <span class="timeline-time">1 day ago</span>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-dot"></div>
+                      <div class="timeline-content">
+                        <h4>Reached 98% Trust Score</h4>
+                        <p>
+                          Community recognition for reliable lending practices
+                        </p>
+                        <span class="timeline-time">3 days ago</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MARKETPLACE PAGE -->
+          <div id="marketplace-page" class="page-content">
+            <div class="marketplace-container">
+              <!-- Marketplace Header -->
+              <div class="marketplace-header">
+                <h1 class="page-title">🛍️ Hacker Marketplace</h1>
+                <p class="page-subtitle">
+                  Premium themes, tools, and digital assets for elite hackers
+                </p>
+
+                <div class="marketplace-filters">
+                  <div class="filter-tabs">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Themes</button>
+                    <button class="filter-btn">Tools</button>
+                    <button class="filter-btn">NFTs</button>
+                    <button class="filter-btn">Audio</button>
+                  </div>
+                  <div class="search-bar">
+                    <input
+                      type="text"
+                      placeholder="Search marketplace..."
+                      class="marketplace-search"
+                    />
+                    <button class="search-btn">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Featured Products -->
+              <div class="featured-section">
+                <h2 class="section-title">⭐ Featured This Week</h2>
+                <div class="featured-carousel">
+                  <div class="featured-item">
+                    <div class="featured-image">
+                      <div class="product-preview matrix-theme">MATRIX</div>
+                    </div>
+                    <h3>Matrix Rain Theme</h3>
+                    <p>Authentic green rain effect with terminal aesthetics</p>
+                    <div class="featured-price">5,000 CR</div>
+                  </div>
+                  <div class="featured-item">
+                    <div class="featured-image">
+                      <div class="product-preview neon-theme">NEON</div>
+                    </div>
+                    <h3>Cyberpunk Neon Pack</h3>
+                    <p>
+                      Complete UI theme with glowing effects and synthwave
+                      colors
+                    </p>
+                    <div class="featured-price">7,500 CR</div>
+                  </div>
+                  <div class="featured-item">
+                    <div class="featured-image">
+                      <div class="product-preview hacker-theme">HACK</div>
+                    </div>
+                    <h3>Elite Hacker Toolkit</h3>
+                    <p>
+                      Professional penetration testing suite with custom scripts
+                    </p>
+                    <div class="featured-price">15,000 CR</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Products Grid -->
+              <div class="products-section">
+                <h2 class="section-title">🎨 All Products</h2>
+                <div class="products-grid">
+                  <div class="product-card">
+                    <div class="product-image">
+                      <div class="product-preview quantum-theme">Q</div>
+                      <div class="product-badges">
+                        <span class="badge-hot">HOT</span>
+                      </div>
+                    </div>
+                    <div class="product-info">
+                      <h3>Quantum Glitch Theme</h3>
+                      <p>
+                        Advanced particle effects with quantum physics
+                        animations
+                      </p>
+                      <div class="product-stats">
+                        <span><i class="fas fa-download"></i> 247</span>
+                        <span><i class="fas fa-star"></i> 4.9</span>
+                      </div>
+                      <div class="product-price">3,500 CR</div>
+                    </div>
+                    <button class="product-btn">Add to Cart</button>
+                  </div>
+
+                  <div class="product-card">
+                    <div class="product-image">
+                      <div class="product-preview terminal-theme">$</div>
+                      <div class="product-badges">
+                        <span class="badge-new">NEW</span>
+                      </div>
+                    </div>
+                    <div class="product-info">
+                      <h3>Terminal Master Pro</h3>
+                      <p>
+                        Advanced command line interface with AI auto-completion
+                      </p>
+                      <div class="product-stats">
+                        <span><i class="fas fa-download"></i> 89</span>
+                        <span><i class="fas fa-star"></i> 5.0</span>
+                      </div>
+                      <div class="product-price">8,000 CR</div>
+                    </div>
+                    <button class="product-btn">Add to Cart</button>
+                  </div>
+
+                  <div class="product-card">
+                    <div class="product-image">
+                      <div class="product-preview hologram-theme">H</div>
+                    </div>
+                    <div class="product-info">
+                      <h3>Hologram Avatar Pack</h3>
+                      <p>
+                        3D holographic profile pictures with real-time
+                        animations
+                      </p>
+                      <div class="product-stats">
+                        <span><i class="fas fa-download"></i> 156</span>
+                        <span><i class="fas fa-star"></i> 4.8</span>
+                      </div>
+                      <div class="product-price">4,200 CR</div>
+                    </div>
+                    <button class="product-btn">Add to Cart</button>
+                  </div>
+
+                  <div class="product-card">
+                    <div class="product-image">
+                      <div class="product-preview crypto-theme">₿</div>
+                      <div class="product-badges">
+                        <span class="badge-limited">LIMITED</span>
+                      </div>
+                    </div>
+                    <div class="product-info">
+                      <h3>Crypto Mining Dashboard</h3>
+                      <p>
+                        Real-time mining stats with portfolio tracking and
+                        alerts
+                      </p>
+                      <div class="product-stats">
+                        <span><i class="fas fa-download"></i> 78</span>
+                        <span><i class="fas fa-star"></i> 4.7</span>
+                      </div>
+                      <div class="product-price">12,500 CR</div>
+                    </div>
+                    <button class="product-btn">Add to Cart</button>
+                  </div>
+
+                  <div class="product-card">
+                    <div class="product-image">
+                      <div class="product-preview ai-theme">AI</div>
+                    </div>
+                    <div class="product-info">
+                      <h3>AI Code Assistant</h3>
+                      <p>
+                        Machine learning powered code completion and
+                        optimization
+                      </p>
+                      <div class="product-stats">
+                        <span><i class="fas fa-download"></i> 312</span>
+                        <span><i class="fas fa-star"></i> 4.9</span>
+                      </div>
+                      <div class="product-price">9,999 CR</div>
+                    </div>
+                    <button class="product-btn">Add to Cart</button>
+                  </div>
+
+                  <div class="product-card">
+                    <div class="product-image">
+                      <div class="product-preview sound-theme">♪</div>
+                    </div>
+                    <div class="product-info">
+                      <h3>Synthwave Audio Pack</h3>
+                      <p>
+                        Retro-futuristic sound effects and ambient music tracks
+                      </p>
+                      <div class="product-stats">
+                        <span><i class="fas fa-download"></i> 203</span>
+                        <span><i class="fas fa-star"></i> 4.6</span>
+                      </div>
+                      <div class="product-price">2,800 CR</div>
+                    </div>
+                    <button class="product-btn">Add to Cart</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHAT PAGE -->
+          <div id="chat-page" class="page-content">
+            <div class="chat-container">
+              <div class="chat-sidebar">
+                <div class="chat-header">
+                  <h3>💬 Shark Chat</h3>
+                  <button class="new-chat-btn">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+
+                <div class="chat-search">
+                  <input
+                    type="text"
+                    placeholder="Search conversations..."
+                    class="chat-search-input"
+                  />
+                </div>
+
+                <div class="chat-list">
+                  <div class="chat-item active">
+                    <div class="chat-avatar">CX</div>
+                    <div class="chat-info">
+                      <h4>CyberX_404</h4>
+                      <p>Sure, let's discuss the loan terms...</p>
+                      <span class="chat-time">2m</span>
+                    </div>
+                    <div class="chat-unread">3</div>
+                  </div>
+
+                  <div class="chat-item">
+                    <div class="chat-avatar">BZ</div>
+                    <div class="chat-info">
+                      <h4>ByteZombie</h4>
+                      <p>Smart contract is ready for review</p>
+                      <span class="chat-time">1h</span>
+                    </div>
+                  </div>
+
+                  <div class="chat-item">
+                    <div class="chat-avatar">QH</div>
+                    <div class="chat-info">
+                      <h4>QuantumHacker</h4>
+                      <p>Theme package sent successfully</p>
+                      <span class="chat-time">3h</span>
+                    </div>
+                  </div>
+
+                  <div class="chat-item">
+                    <div class="chat-avatar">NX</div>
+                    <div class="chat-info">
+                      <h4>NeonXploit</h4>
+                      <p>Thanks for the quick lending!</p>
+                      <span class="chat-time">1d</span>
+                    </div>
+                  </div>
+
+                  <div class="chat-item">
+                    <div class="chat-avatar">GS</div>
+                    <div class="chat-info">
+                      <h4>GlitchSamurai</h4>
+                      <p>New DeFi protocol looks promising</p>
+                      <span class="chat-time">2d</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="chat-main">
+                <div class="chat-main-header">
+                  <div class="chat-contact">
+                    <div class="chat-avatar">CX</div>
+                    <div class="chat-contact-info">
+                      <h3>CyberX_404</h3>
+                      <span class="online-status"
+                        >🟢 Online • Last seen 1m ago</span
+                      >
+                    </div>
+                  </div>
+                  <div class="chat-actions">
+                    <button class="chat-action-btn">
+                      <i class="fas fa-phone"></i>
+                    </button>
+                    <button class="chat-action-btn">
+                      <i class="fas fa-video"></i>
+                    </button>
+                    <button class="chat-action-btn">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="chat-messages">
+                  <div class="message received">
+                    <div class="message-avatar">CX</div>
+                    <div class="message-content">
+                      <p>
+                        Hey! I saw your lending pool offer. Very interesting
+                        rates!
+                      </p>
+                      <span class="message-time">10:30 AM</span>
+                    </div>
+                  </div>
+
+                  <div class="message sent">
+                    <div class="message-content">
+                      <p>
+                        Thanks! I've optimized the smart contract for maximum
+                        efficiency. What amount are you looking for?
+                      </p>
+                      <span class="message-time">10:32 AM</span>
+                    </div>
+                  </div>
+
+                  <div class="message received">
+                    <div class="message-avatar">CX</div>
+                    <div class="message-content">
+                      <p>
+                        I need about 25,000 CR for a new DeFi project launch.
+                        Expected ROI is around 40% in 48 hours.
+                      </p>
+                      <span class="message-time">10:35 AM</span>
+                    </div>
+                  </div>
+
+                  <div class="message sent">
+                    <div class="message-content">
+                      <p>
+                        Sounds solid! I can do 25K at 8.5% hourly interest.
+                        That's 816 CR profit per hour. Deal?
+                      </p>
+                      <span class="message-time">10:36 AM</span>
+                    </div>
+                  </div>
+
+                  <div class="message received">
+                    <div class="message-avatar">CX</div>
+                    <div class="message-content">
+                      <p>
+                        Perfect! Can you send me the smart contract address for
+                        review?
+                      </p>
+                      <span class="message-time">10:38 AM</span>
+                    </div>
+                  </div>
+
+                  <div class="message sent">
+                    <div class="message-content">
+                      <div class="contract-share">
+                        <div class="contract-icon">📄</div>
+                        <div class="contract-info">
+                          <h4>SharkLend_v2.sol</h4>
+                          <p>0x742d35Cc6e5c456b7f45b3b4...</p>
+                        </div>
+                        <button class="contract-btn">View</button>
+                      </div>
+                      <span class="message-time">10:39 AM</span>
+                    </div>
+                  </div>
+
+                  <div class="message received">
+                    <div class="message-avatar">CX</div>
+                    <div class="message-content">
+                      <p>
+                        Contract looks good! Ready to proceed. Should I send
+                        collateral first?
+                      </p>
+                      <span class="message-time">2m ago</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="chat-input-area">
+                  <button class="chat-attachment-btn">
+                    <i class="fas fa-paperclip"></i>
+                  </button>
+                  <input
+                    type="text"
+                    placeholder="Type your message..."
+                    class="chat-input"
+                  />
+                  <button class="chat-send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EXPLORE PAGE -->
+          <div id="explore-page" class="page-content">
+            <div class="explore-container">
+              <div class="explore-header">
+                <h1 class="page-title">🔍 Explore SharkSocial</h1>
+                <p class="page-subtitle">
+                  Discover trending hackers, projects, and opportunities
+                </p>
+              </div>
+
+              <div class="explore-sections">
+                <div class="explore-section">
+                  <h2 class="section-title">🔥 Trending Hackers</h2>
+                  <div class="hacker-grid">
+                    <div class="hacker-card">
+                      <div class="hacker-avatar">ZX</div>
+                      <h3>ZeroXploit</h3>
+                      <p>Elite penetration tester</p>
+                      <div class="hacker-stats">
+                        <span>⚡4.9</span>
+                        <span>98% Trust</span>
+                        <span>245 Loans</span>
+                      </div>
+                      <button class="follow-btn">Follow</button>
+                    </div>
+                    <div class="hacker-card">
+                      <div class="hacker-avatar">CQ</div>
+                      <h3>CryptoQueen</h3>
+                      <p>DeFi protocol architect</p>
+                      <div class="hacker-stats">
+                        <span>⚡5.0</span>
+                        <span>100% Trust</span>
+                        <span>178 Loans</span>
+                      </div>
+                      <button class="follow-btn">Follow</button>
+                    </div>
+                    <div class="hacker-card">
+                      <div class="hacker-avatar">DV</div>
+                      <h3>DataViper</h3>
+                      <p>AI security specialist</p>
+                      <div class="hacker-stats">
+                        <span>⚡4.8</span>
+                        <span>96% Trust</span>
+                        <span>89 Loans</span>
+                      </div>
+                      <button class="follow-btn">Follow</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="explore-section">
+                  <h2 class="section-title">🚀 Hot Projects</h2>
+                  <div class="project-grid">
+                    <div class="project-card">
+                      <div class="project-header">
+                        <h3>Quantum DeFi Protocol</h3>
+                        <span class="project-status hot">🔥 HOT</span>
+                      </div>
+                      <p>
+                        Revolutionary quantum-resistant lending platform with
+                        AI-powered risk assessment
+                      </p>
+                      <div class="project-stats">
+                        <div class="stat">
+                          <span class="stat-label">Funding</span>
+                          <span class="stat-value">850K CR</span>
+                        </div>
+                        <div class="stat">
+                          <span class="stat-label">ROI</span>
+                          <span class="stat-value">+340%</span>
+                        </div>
+                        <div class="stat">
+                          <span class="stat-label">Risk</span>
+                          <span class="stat-value">Low</span>
+                        </div>
+                      </div>
+                      <button class="invest-btn">Invest Now</button>
+                    </div>
+                    <div class="project-card">
+                      <div class="project-header">
+                        <h3>Neural Market Predictor</h3>
+                        <span class="project-status new">✨ NEW</span>
+                      </div>
+                      <p>
+                        AI-driven market analysis tool for cryptocurrency and
+                        credit lending optimization
+                      </p>
+                      <div class="project-stats">
+                        <div class="stat">
+                          <span class="stat-label">Funding</span>
+                          <span class="stat-value">425K CR</span>
+                        </div>
+                        <div class="stat">
+                          <span class="stat-label">ROI</span>
+                          <span class="stat-value">+210%</span>
+                        </div>
+                        <div class="stat">
+                          <span class="stat-label">Risk</span>
+                          <span class="stat-value">Medium</span>
+                        </div>
+                      </div>
+                      <button class="invest-btn">Invest Now</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="explore-section">
+                  <h2 class="section-title">🎯 Opportunities</h2>
+                  <div class="opportunities-list">
+                    <div class="opportunity-card">
+                      <div class="opportunity-icon">💰</div>
+                      <div class="opportunity-content">
+                        <h3>High-Yield Lending Pool</h3>
+                        <p>
+                          Join exclusive lending pool with guaranteed 15% hourly
+                          returns
+                        </p>
+                        <div class="opportunity-meta">
+                          <span>Min: 10K CR</span>
+                          <span>Duration: 24h</span>
+                          <span>Spots: 3 left</span>
+                        </div>
+                      </div>
+                      <button class="opportunity-btn">Join Pool</button>
+                    </div>
+                    <div class="opportunity-card">
+                      <div class="opportunity-icon">🔐</div>
+                      <div class="opportunity-content">
+                        <h3>Security Audit Contest</h3>
+                        <p>
+                          Find vulnerabilities in new smart contracts, win up to
+                          50K CR
+                        </p>
+                        <div class="opportunity-meta">
+                          <span>Prize: 50K CR</span>
+                          <span>Deadline: 48h</span>
+                          <span>Level: Expert</span>
+                        </div>
+                      </div>
+                      <button class="opportunity-btn">Participate</button>
+                    </div>
+                    <div class="opportunity-card">
+                      <div class="opportunity-icon">🎨</div>
+                      <div class="opportunity-content">
+                        <h3>Theme Design Bounty</h3>
+                        <p>
+                          Create cyberpunk themes for SharkSocial, earn credits
+                          for each sale
+                        </p>
+                        <div class="opportunity-meta">
+                          <span>Royalty: 30%</span>
+                          <span>Base: 5K CR</span>
+                          <span>Category: Design</span>
+                        </div>
+                      </div>
+                      <button class="opportunity-btn">Start Design</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NOTIFICATIONS PAGE -->
+          <div id="notifications-page" class="page-content">
+            <div class="notifications-container">
+              <div class="notifications-header">
+                <h1 class="page-title">🔔 Notifications</h1>
+                <div class="notification-controls">
+                  <button class="mark-all-read">Mark All Read</button>
+                  <button class="notification-settings">
+                    <i class="fas fa-cog"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="notification-filters">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Loans</button>
+                <button class="filter-btn">Trades</button>
+                <button class="filter-btn">Social</button>
+                <button class="filter-btn">System</button>
+              </div>
+
+              <div class="notifications-list">
+                <div class="notification-item unread">
+                  <div class="notification-icon loan">💰</div>
+                  <div class="notification-content">
+                    <h3>Loan Request Approved</h3>
+                    <p>
+                      CyberX_404 approved your 25,000 CR loan request with 8.5%
+                      hourly interest
+                    </p>
+                    <span class="notification-time">2 minutes ago</span>
+                  </div>
+                  <button class="notification-action">View Details</button>
+                </div>
+
+                <div class="notification-item unread">
+                  <div class="notification-icon trade">🛒</div>
+                  <div class="notification-content">
+                    <h3>Theme Purchase Successful</h3>
+                    <p>
+                      You successfully purchased "Quantum Glitch Theme" for
+                      3,500 CR
+                    </p>
+                    <span class="notification-time">15 minutes ago</span>
+                  </div>
+                  <button class="notification-action">Download</button>
+                </div>
+
+                <div class="notification-item">
+                  <div class="notification-icon social">👥</div>
+                  <div class="notification-content">
+                    <h3>New Follower</h3>
+                    <p>ByteZombie started following you</p>
+                    <span class="notification-time">1 hour ago</span>
+                  </div>
+                  <button class="notification-action">View Profile</button>
+                </div>
+
+                <div class="notification-item">
+                  <div class="notification-icon system">⚙️</div>
+                  <div class="notification-content">
+                    <h3>Security Update</h3>
+                    <p>
+                      Your account security score increased to 98% after recent
+                      activity
+                    </p>
+                    <span class="notification-time">3 hours ago</span>
+                  </div>
+                  <button class="notification-action">View Report</button>
+                </div>
+
+                <div class="notification-item">
+                  <div class="notification-icon loan">💸</div>
+                  <div class="notification-content">
+                    <h3>Loan Repayment Received</h3>
+                    <p>QuantumHacker repaid 12,000 CR + 2,160 CR interest</p>
+                    <span class="notification-time">6 hours ago</span>
+                  </div>
+                  <button class="notification-action">View Transaction</button>
+                </div>
+
+                <div class="notification-item">
+                  <div class="notification-icon social">💬</div>
+                  <div class="notification-content">
+                    <h3>New Message</h3>
+                    <p>
+                      DataViper sent you a private message about collaboration
+                      opportunity
+                    </p>
+                    <span class="notification-time">8 hours ago</span>
+                  </div>
+                  <button class="notification-action">Reply</button>
+                </div>
+
+                <div class="notification-item">
+                  <div class="notification-icon trade">🎨</div>
+                  <div class="notification-content">
+                    <h3>Theme Sale</h3>
+                    <p>
+                      Your "Matrix Rain Theme" was purchased by 3 users, earned
+                      15,000 CR
+                    </p>
+                    <span class="notification-time">1 day ago</span>
+                  </div>
+                  <button class="notification-action">View Earnings</button>
+                </div>
+
+                <div class="notification-item">
+                  <div class="notification-icon system">🏆</div>
+                  <div class="notification-content">
+                    <h3>Achievement Unlocked</h3>
+                    <p>
+                      Congratulations! You unlocked "Elite Lender" achievement
+                    </p>
+                    <span class="notification-time">2 days ago</span>
+                  </div>
+                  <button class="notification-action">View Achievement</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <aside class="info-sidebar">
+          <!-- Trending Widget -->
+          <div class="info-widget">
+            <h3 class="widget-title">
+              <i class="fas fa-fire"></i>
+              Trending Now
+            </h3>
+            <div class="trending-list">
+              <div class="trending-item">
+                <span class="trending-tag">#DeFiHacking</span>
+                <span class="trending-count">342 posts</span>
+              </div>
+              <div class="trending-item">
+                <span class="trending-tag">#CreditLending</span>
+                <span class="trending-count">189 posts</span>
+              </div>
+              <div class="trending-item">
+                <span class="trending-tag">#NFTTrading</span>
+                <span class="trending-count">156 posts</span>
+              </div>
+              <div class="trending-item">
+                <span class="trending-tag">#SmartContracts</span>
+                <span class="trending-count">134 posts</span>
+              </div>
+              <div class="trending-item">
+                <span class="trending-tag">#HackerThemes</span>
+                <span class="trending-count">98 posts</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Stats -->
+          <div class="info-widget">
+            <h3 class="widget-title">
+              <i class="fas fa-chart-bar"></i>
+              Your Stats
+            </h3>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-desc">Active Loans</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">4.9</div>
+                <div class="stat-desc">Trust Rating</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">2.3K</div>
+                <div class="stat-desc">Credits Earned</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">7</div>
+                <div class="stat-desc">Themes Owned</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Market Alert -->
+          <div class="info-widget">
+            <h3 class="widget-title">
+              <i class="fas fa-bell"></i>
+              Market Alerts
+            </h3>
+            <div class="trending-list">
+              <div class="trending-item">
+                <span class="trending-tag terminal-text"
+                  >High Demand: DeFi Loans</span
+                >
+              </div>
+              <div class="trending-item">
+                <span class="trending-tag terminal-text"
+                  >New: Quantum Themes</span
+                >
+              </div>
+              <div class="trending-item">
+                <span class="trending-tag terminal-text"
+                  >Price Drop: NFT Tools</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="info-widget">
+            <h3 class="widget-title">
+              <i class="fas fa-zap"></i>
+              Quick Actions
+            </h3>
+            <button
+              class="hacker-btn"
+              style="width: 100%; margin-bottom: 0.5rem"
+            >
+              <i class="fas fa-plus"></i>
+              Create Loan Offer
+            </button>
+            <button
+              class="hacker-btn"
+              style="
+                width: 100%;
+                background: linear-gradient(
+                  45deg,
+                  var(--neon-blue),
+                  var(--neon-pink)
+                );
+              "
+            >
+              <i class="fas fa-store"></i>
+              Browse Market
+            </button>
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <script>
+      // Page Routing System
+      function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll(".page-content").forEach((page) => {
+          page.classList.remove("active");
+        });
+
+        // Show selected page
+        const targetPage = document.getElementById(pageId + "-page");
+        if (targetPage) {
+          targetPage.classList.add("active");
+        }
+
+        // Update navigation states
+        updateNavigationState(pageId);
+      }
+
+      function updateNavigationState(activePageId) {
+        // Update sidebar navigation
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.classList.remove("active");
+        });
+
+        // Set active state based on page
+        const pageNavMapping = {
+          feed: 0,
+          explore: 1,
+          notifications: 2,
+          chat: 3,
+        };
+
+        if (pageNavMapping.hasOwnProperty(activePageId)) {
+          const navItems = document.querySelectorAll(".nav-item");
+          if (navItems[pageNavMapping[activePageId]]) {
+            navItems[pageNavMapping[activePageId]].classList.add("active");
+          }
+        }
+      }
+
+      // Handle hash-based routing
+      function handleHashChange() {
+        const hash = window.location.hash.substring(1);
+        const validPages = [
+          "feed",
+          "bio",
+          "marketplace",
+          "chat",
+          "explore",
+          "notifications",
+        ];
+
+        if (validPages.includes(hash)) {
+          showPage(hash);
+        } else {
+          showPage("feed"); // default page
+        }
+      }
+
+      // Floating Widget Functionality
+      function toggleWidget() {
+        const links = document.getElementById("widgetLinks");
+        links.classList.toggle("show");
+      }
+
+      // Language Toggle Functionality
+      let currentLanguage = "en";
+
+      function toggleLanguage() {
+        currentLanguage = currentLanguage === "en" ? "th" : "en";
+        updateLanguage();
+      }
+
+      function updateLanguage() {
+        const langDisplay = document.getElementById("currentLang");
+        langDisplay.textContent = currentLanguage.toUpperCase();
+
+        // Update all text elements with language data attributes
+        const textElements = document.querySelectorAll("[data-en][data-th]");
+        textElements.forEach((element) => {
+          element.textContent = element.getAttribute(`data-${currentLanguage}`);
+        });
+
+        // Update settings panel text
+        const translations = {
+          en: {
+            settingsTitle: "Widget Settings",
+            themeLabel: "Theme:",
+            positionLabel: "Position:",
+            notificationsLabel: "Notifications:",
+          },
+          th: {
+            settingsTitle: "การตั้งค่าวิดเจต",
+            themeLabel: "ธีม:",
+            positionLabel: "ตำแหน่ง:",
+            notificationsLabel: "การแจ้งเตือน:",
+          },
+        };
+
+        document.getElementById("settingsTitle").textContent =
+          translations[currentLanguage].settingsTitle;
+        document.getElementById("themeLabel").textContent =
+          translations[currentLanguage].themeLabel;
+        document.getElementById("positionLabel").textContent =
+          translations[currentLanguage].positionLabel;
+        document.getElementById("notificationsLabel").textContent =
+          translations[currentLanguage].notificationsLabel;
+      }
+
+      // Settings Panel Functionality
+      function toggleSettings() {
+        const settings = document.getElementById("widgetSettings");
+        settings.classList.toggle("show");
+      }
+
+      function changeTheme() {
+        const theme = document.getElementById("themeSelect").value;
+        // Store theme preference
+        localStorage.setItem("widgetTheme", theme);
+
+        // Apply theme logic here
+        if (theme === "light") {
+          document.documentElement.style.setProperty("--bg-card", "#ffffff");
+          document.documentElement.style.setProperty(
+            "--text-primary",
+            "#000000",
+          );
+        } else if (theme === "dark") {
+          document.documentElement.style.setProperty("--bg-card", "#1a1a2e");
+          document.documentElement.style.setProperty(
+            "--text-primary",
+            "#ffffff",
+          );
+        }
+        // Auto theme would check system preference
+      }
+
+      function changePosition() {
+        const position = document.getElementById("positionSelect").value;
+        const widget = document.getElementById("floatingWidget");
+
+        if (position === "left") {
+          widget.style.right = "auto";
+          widget.style.left = "20px";
+          // Adjust settings panel position
+          const settings = document.getElementById("widgetSettings");
+          settings.style.left = "100%";
+          settings.style.marginLeft = "10px";
+        } else {
+          widget.style.left = "auto";
+          widget.style.right = "20px";
+          // Reset settings panel position
+          const settings = document.getElementById("widgetSettings");
+          settings.style.left = "-250px";
+          settings.style.marginLeft = "0";
+        }
+
+        // Store position preference
+        localStorage.setItem("widgetPosition", position);
+      }
+
+      // Load saved preferences on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        // Load saved theme
+        const savedTheme = localStorage.getItem("widgetTheme");
+        if (savedTheme) {
+          document.getElementById("themeSelect").value = savedTheme;
+          changeTheme();
+        }
+
+        // Load saved position
+        const savedPosition = localStorage.getItem("widgetPosition");
+        if (savedPosition) {
+          document.getElementById("positionSelect").value = savedPosition;
+          changePosition();
+        }
+
+        // Load saved language
+        const savedLanguage = localStorage.getItem("widgetLanguage");
+        if (savedLanguage) {
+          currentLanguage = savedLanguage;
+          updateLanguage();
+        }
+      });
+
+      // Save language preference
+      function saveLanguagePreference() {
+        localStorage.setItem("widgetLanguage", currentLanguage);
+      }
+
+      // Update the toggleLanguage function to save preference
+      function toggleLanguage() {
+        currentLanguage = currentLanguage === "en" ? "th" : "en";
+        updateLanguage();
+        saveLanguagePreference();
+      }
+
+      // Post Type Selection
+      document.querySelectorAll(".post-type-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".post-type-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          // Update placeholder based on selection
+          const textarea = document.querySelector(".post-input-area");
+          if (btn.textContent.includes("Lend")) {
+            textarea.placeholder =
+              "Offer credits for lending... Set your rates and terms 💰";
+          } else if (btn.textContent.includes("Borrow")) {
+            textarea.placeholder =
+              "Request credits... Describe your project and ROI 🚀";
+          } else {
+            textarea.placeholder =
+              "Share your hacker thoughts... What are you coding today? 🦈💻";
+          }
+        });
+      });
+
+      // Navigation Item Selection
+      document.querySelectorAll(".nav-item").forEach((item, index) => {
+        item.addEventListener("click", () => {
+          // Map nav items to pages
+          const navToPageMapping = ["feed", "explore", "notifications", "chat"];
+          const targetPage = navToPageMapping[index];
+
+          if (targetPage) {
+            window.location.hash = targetPage;
+          }
+
+          // Add glitch effect
+          item.classList.add("glitch-effect");
+          setTimeout(() => item.classList.remove("glitch-effect"), 300);
+        });
+      });
+
+      // Widget links navigation
+      document.querySelectorAll(".widget-link").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const href = link.getAttribute("href");
+          if (href && href.startsWith("#")) {
+            window.location.hash = href.substring(1);
+          }
+        });
+      });
+
+      // Action Button Effects
+      document.querySelectorAll(".action-btn, .hacker-btn").forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+          // Prevent default for demo
+          e.preventDefault();
+
+          // Create ripple effect
+          const ripple = document.createElement("div");
+          ripple.style.position = "absolute";
+          ripple.style.borderRadius = "50%";
+          ripple.style.background = "rgba(0, 255, 0, 0.6)";
+          ripple.style.transform = "scale(0)";
+          ripple.style.animation = "ripple 0.6s linear";
+          ripple.style.left = e.clientX - this.offsetLeft + "px";
+          ripple.style.top = e.clientY - this.offsetTop + "px";
+          ripple.style.width = ripple.style.height = "20px";
+
+          this.style.position = "relative";
+          this.appendChild(ripple);
+
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+
+          // Update button text for certain actions
+          if (
+            this.textContent.includes("Borrow") ||
+            this.textContent.includes("Lend")
+          ) {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check"></i> Processing...';
+            this.style.background =
+              "linear-gradient(45deg, var(--profit-color), #00ff66)";
+
+            setTimeout(() => {
+              this.innerHTML = '<i class="fas fa-check-double"></i> Completed';
+
+              setTimeout(() => {
+                this.innerHTML = originalText;
+                this.style.background = "";
+              }, 2000);
+            }, 1500);
+          }
+        });
+      });
+
+      // Credit Counter Animation
+      function animateCredits() {
+        const creditAmount = document.querySelector(".credit-amount");
+        const currentAmount = parseInt(
+          creditAmount.textContent.replace(/[^\d]/g, ""),
+        );
+        const newAmount = currentAmount + Math.floor(Math.random() * 100) + 10;
+
+        creditAmount.style.transform = "scale(1.1)";
+        creditAmount.style.color = "var(--profit-color)";
+
+        setTimeout(() => {
+          creditAmount.textContent = `${newAmount.toLocaleString()} CR`;
+          creditAmount.style.transform = "scale(1)";
+          setTimeout(() => {
+            creditAmount.style.color = "var(--credit-color)";
+          }, 200);
+        }, 150);
+      }
+
+      // Simulate real-time updates
+      setInterval(() => {
+        // Random stats updates
+        const viewCounts = document.querySelectorAll(".post-stats");
+        viewCounts.forEach((stat) => {
+          const currentViews = parseInt(stat.textContent.match(/\d+/)[0]);
+          stat.innerHTML = stat.innerHTML.replace(
+            /\d+(?= views)/,
+            currentViews + Math.floor(Math.random() * 5) + 1,
+          );
+        });
+      }, 8000);
+
+      // Periodic credit animation
+      setInterval(animateCredits, 15000);
+
+      // Make floating widget draggable
+      let isDragging = false;
+      let currentX = 0;
+      let currentY = 0;
+      let initialX = 0;
+      let initialY = 0;
+      let xOffset = 0;
+      let yOffset = 0;
+
+      const widget = document.getElementById("floatingWidget");
+
+      widget.addEventListener("mousedown", dragStart);
+      document.addEventListener("mousemove", drag);
+      document.addEventListener("mouseup", dragEnd);
+
+      function dragStart(e) {
+        if (e.target.closest(".widget-icon")) {
+          initialX = e.clientX - xOffset;
+          initialY = e.clientY - yOffset;
+          isDragging = true;
+        }
+      }
+
+      function drag(e) {
+        if (isDragging) {
+          e.preventDefault();
+          currentX = e.clientX - initialX;
+          currentY = e.clientY - initialY;
+          xOffset = currentX;
+          yOffset = currentY;
+          widget.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        }
+      }
+
+      function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+      }
+
+      // Add terminal-style typing effect to logo
+      const logoText = document.querySelector(".logo-text");
+      const originalText = logoText.textContent;
+      let index = 0;
+
+      function typeWriter() {
+        if (index < originalText.length) {
+          logoText.textContent = originalText.substring(0, index + 1) + "|";
+          index++;
+          setTimeout(typeWriter, 100);
+        } else {
+          logoText.textContent = originalText;
+          setTimeout(() => {
+            index = 0;
+            logoText.textContent = "";
+            setTimeout(typeWriter, 5000);
+          }, 3000);
+        }
+      }
+
+      // Initialize routing
+      window.addEventListener("hashchange", handleHashChange);
+      window.addEventListener("load", handleHashChange);
+
+      // Marketplace filter functionality
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          // Add filter logic here
+          console.log("Filter selected:", btn.textContent);
+        });
+      });
+
+      // Chat functionality
+      document.querySelectorAll(".chat-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          document
+            .querySelectorAll(".chat-item")
+            .forEach((i) => i.classList.remove("active"));
+          item.classList.add("active");
+
+          // Update chat main content based on selected chat
+          const userName = item.querySelector("h4").textContent;
+          console.log("Chat selected:", userName);
+        });
+      });
+
+      // Notifications functionality
+      document
+        .querySelectorAll(".notification-filters .filter-btn")
+        .forEach((btn) => {
+          btn.addEventListener("click", () => {
+            document
+              .querySelectorAll(".notification-filters .filter-btn")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            // Filter notifications logic here
+            console.log("Notification filter:", btn.textContent);
+          });
+        });
+
+      // Mark all notifications as read
+      const markAllReadBtn = document.querySelector(".mark-all-read");
+      if (markAllReadBtn) {
+        markAllReadBtn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".notification-item.unread")
+            .forEach((item) => {
+              item.classList.remove("unread");
+            });
+          console.log("All notifications marked as read");
+        });
+      }
+
+      // Explore page interactions
+      document.querySelectorAll(".follow-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          if (btn.textContent === "Follow") {
+            btn.textContent = "Following";
+            btn.style.background = "var(--bg-accent)";
+            btn.style.color = "var(--primary-green)";
+          } else {
+            btn.textContent = "Follow";
+            btn.style.background = "";
+            btn.style.color = "";
+          }
+        });
+      });
+
+      // Marketplace product interactions
+      document.querySelectorAll(".product-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const originalText = btn.textContent;
+          btn.textContent = "Adding...";
+          btn.disabled = true;
+
+          setTimeout(() => {
+            btn.textContent = "Added to Cart";
+            btn.style.background = "var(--profit-color)";
+
+            setTimeout(() => {
+              btn.textContent = originalText;
+              btn.disabled = false;
+              btn.style.background = "";
+            }, 2000);
+          }, 1000);
+        });
+      });
+
+      // Start typing animation after page load
+      setTimeout(typeWriter, 2000);
+
+      // Add CSS for ripple animation
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+      document.head.appendChild(style);
+
+      // Console easter egg
+      console.log(`
+        🦈 SHARKSOCIAL INITIALIZED 🦈
+        ================================
+        Welcome to the hacker social network!
+        Type 'shark.help()' for hidden commands
+        `);
+
+      window.shark = {
+        help: () => {
+          console.log(`
+                🦈 SHARK COMMANDS:
+                - shark.credits() - Check credit balance
+                - shark.hack() - Enable matrix mode
+                - shark.rainbow() - Rainbow theme
+                - shark.reset() - Reset to default
+                `);
+        },
+        credits: () => {
+          console.log("💰 Current balance: 15,750 CR");
+          animateCredits();
+        },
+        hack: () => {
+          document.body.style.filter = "hue-rotate(120deg) contrast(1.2)";
+          console.log("🔴 MATRIX MODE ACTIVATED");
+        },
+        rainbow: () => {
+          document.body.style.animation = "hue-rotate 5s linear infinite";
+          console.log("🌈 RAINBOW MODE ACTIVATED");
+        },
+        reset: () => {
+          document.body.style.filter = "";
+          document.body.style.animation = "";
+          console.log("✅ THEME RESET");
+        },
+      };
+
+      // Add hue-rotate animation
+      const hueStyle = document.createElement("style");
+      hueStyle.textContent = `
+            @keyframes hue-rotate {
+                0% { filter: hue-rotate(0deg); }
+                100% { filter: hue-rotate(360deg); }
+            }
+        `;
+      document.head.appendChild(hueStyle);
+    </script>
+  </body>
+</html>
